@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device_width, initial-scale=1">
+    <title>Stock Information</title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.css"/>
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.js"></script>
+    <script src="resources/javascripts/stocks.js"></script>
+    <style>
+        table {
+            color: black;
+            background: #fff;
+            border: 1px solid #b4b4b4;
+            font: bold 17px helvetica;
+            padding: 0;
+            margin-top: 10px;
+            width: 100%;
+            -webkit-border-radius: 8px;
+        }
+
+        table tr td {
+            color: #666;
+            border-bottom: 1px solid #b4b4b4;
+            border-right: 1px solid #b4b4b4;
+            padding: 10px 10px 10px 10px;
+            background-image: -webkit-linear-gradient(top, #fdfdfd, #eee);
+        }
+
+        table tr td:last-child {
+            border-right: none;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div data-role="page" id="page_today">
+    <div data-role="header">
+        <h1>오늘의 증시</h1>
+    </div>
+    <div data-role="content">
+        <table id="table_today"></table>
+    </div>
+    <div data-role="footer">
+        <h4><a id="to_world" href="#page_world">해외 증시 확인</a></h4>
+    </div>
+</div>
+<div data-role="page" id="page_world">
+    <div data-role="header">
+        <h1>해외 증시</h1>
+    </div>
+    <div data-role="content">
+        <table id="table_world"></table>
+    </div>
+    <div data-role="footer">
+        <h4><a id="to_mygroup" href="#page_mygroup">나의 관심종목 확인</a></h4>
+    </div>
+</div>
+<div data-role="page" id="page_mygroup">
+    <div data-role="header">
+        <h1>나의 관심종목</h1>
+    </div>
+    <div data-role="content">
+        <table id="table_mygroup"></table>
+    </div>
+    <div data-role="footer">
+        <h4><a id="to_today" href="#page_today">오늘의 증시 확인</a></h4>
+    </div>
+</div>
+</body>
+</html>
