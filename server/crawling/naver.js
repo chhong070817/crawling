@@ -23,7 +23,7 @@ casper.then(function() {
     // console.log("login using username and password");
     this.evaluate(function() {
         document.getElementById("id").value = "chhong0708";
-        document.getElementById("pw").value = "ghdckdgh84";
+        document.getElementById("pw").value = "****";
         document.getElementById("frmNIDLogin").submit();
     });
 });
