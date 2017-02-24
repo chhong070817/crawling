@@ -1,3 +1,6 @@
+
+var exec = require("child_process").exec;
+
 module.exports = function(app, stock) {
 
     //get all stocks
@@ -14,6 +17,15 @@ module.exports = function(app, stock) {
             if(err) return res.status(500).json({error: err});
             if(!stock) return res.status(404).json({error:"stock not found"});
             res.json(stock);
+        });
+    });
+
+    app.post("/api/stocks/add", function(req, res) {
+        exec("casperjs crawling\\add.js " + req.body.name , function(err, stdout, stderr) {
+            if(err) {
+                return res.status(500).send({error: "database failure"});
+            }
+            res.json({message:stdout});
         });
     });
 

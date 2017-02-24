@@ -5,12 +5,33 @@ $(function(window, $, document) {
 
     $(document).ready(function() {
 
-        var httpRequest = function(url, callback) {
+        var httpRequestGET = function(url, callback) {
             $.ajax({
                 cache: false,
                 type: "GET",
                 crossDomain: true,
                 url: url,
+                success: function (data) {
+                    var resultData = (typeof data === "string") ? JSON.parse(data) : data;
+                    callback(resultData);
+                },
+                error: function (data) {
+                    //nothing
+                },
+                xhrFields: {
+                    withCredentials: true
+                }
+            });
+        };
+
+        var httpRequestPOST = function(url, callback, inputData) {
+            $.ajax({
+                cache: false,
+                type: "POST",
+                crossDomain: true,
+                contentType: "application/json;charset=utf-8",
+                url: url,
+                data: JSON.stringify(inputData),
                 success: function (data) {
                     var resultData = (typeof data === "string") ? JSON.parse(data) : data;
                     callback(resultData);
@@ -32,13 +53,13 @@ $(function(window, $, document) {
                         " style='color:red'" : (data[i].updown_value.indexOf("-") >= 0 ? " style='color:blue'" : "");
 
                     html += "<tr><td>" + data[i].name +
-                            "</td><td" + updownStyle + ">" + data[i].current_value +
-                            "</td><td" + updownStyle + ">" + data[i].updown_value +
-                            "</td><td><img src='" + data[i].image + "<'/></td></tr>";
+                        "</td><td" + updownStyle + ">" + data[i].current_value +
+                        "</td><td" + updownStyle + ">" + data[i].updown_value +
+                        "</td><td><img src='" + data[i].image + "<'/></td></tr>";
                 }
                 $("#table_today").html(html);
             };
-            httpRequest("http://localhost:8080/api/stocks/today", todayStockCB);
+            httpRequestGET("http://localhost:8080/api/stocks/today", todayStockCB);
         };
 
         var worldStock = function() {
@@ -55,7 +76,7 @@ $(function(window, $, document) {
                 }
                 $("#table_world").html(html);
             };
-            httpRequest("http://localhost:8080/api/stocks/world", worldStockCB);
+            httpRequestGET("http://localhost:8080/api/stocks/world", worldStockCB);
         };
 
         var myStock = function() {
@@ -76,7 +97,18 @@ $(function(window, $, document) {
                 }
                 $("#table_mygroup").html(html);
             };
-            httpRequest("http://localhost:8080/api/stocks/mystock", myStockCB);
+            httpRequestGET("http://localhost:8080/api/stocks/mystock", myStockCB);
+        };
+
+        var addItem = function() {
+            var addItemCB = function(data) {
+                location.reload();
+            };
+
+            var item = {
+                "name": $("#add_value").val()
+            };
+            httpRequestPOST("http://localhost:8080/api/stocks/add", addItemCB, item);
         };
 
         todayStock();
@@ -94,5 +126,9 @@ $(function(window, $, document) {
         $("#to_mygroup").on("click", function(e) {
             myStock();
         });
+
+        $("#add_btn").on("click", function(e) {
+            addItem();
+        })
     });
 }(window, jQuery, document));
